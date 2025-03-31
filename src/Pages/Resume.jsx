@@ -141,15 +141,20 @@ const Resume = () => {
       className="flex flex-col items-center min-h-screen py-16 bg-neutral-900 text-neutral-200"
     >
       <article className="w-[92%] max-w-3xl mx-auto">
-        <header className="text-center mb-16">
-          <h1 className="text-4xl font-medium mb-3">{resumeData.name}</h1>
-          <p className="text-xl text-neutral-400 mb-3">{resumeData.title}</p>
-          <div className="flex justify-center items-center gap-4 text-sm text-neutral-500">
-            <span>{resumeData.email}</span>
+        <header className="text-center mb-20 mt-10">
+          <h1 className="text-5xl font-bold mb-4">{resumeData.name}</h1>
+          <p className="text-2xl text-neutral-400 mb-4">{resumeData.title}</p>
+          <div className="flex justify-center items-center gap-4 text-sm text-neutral-500 mb-6">
+            <a
+              href={`mailto:${resumeData.email}`}
+              className="hover:text-neutral-300 transition-colors"
+            >
+              {resumeData.email}
+            </a>
             <span>•</span>
             <span>{resumeData.location}</span>
           </div>
-          <p className="mt-5 text-neutral-400 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-neutral-400 max-w-2xl mx-auto leading-relaxed text-lg">
             {resumeData.about}
           </p>
         </header>
@@ -184,7 +189,13 @@ const Resume = () => {
 
         <Section title="Projects">
           {resumeData.projects.featured.map((project, index) => (
-            <div key={index} className="mb-12 last:mb-0">
+            <div
+              key={index}
+              className="mb-12 last:mb-0 p-6 rounded-lg
+                bg-neutral-800/10 hover:bg-neutral-800/20
+                border border-neutral-800/50
+                transition-all duration-200"
+            >
               <div className="flex justify-between items-start mb-4">
                 <h3 className="text-xl font-medium text-neutral-200">
                   {project.title}
@@ -254,16 +265,18 @@ const Resume = () => {
         <Section title="Contact">
           <div className="space-y-8">
             {/* Social Links */}
-            <div className="flex flex-wrap gap-3 justify-center">
+            <div className="flex flex-wrap gap-4 justify-center">
               {Object.entries(resumeData.social).map(([platform, url]) => (
                 <a
                   key={platform}
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-3 py-1.5 rounded-md 
-                    bg-neutral-800/30 hover:bg-neutral-800/50 
-                    transition-colors duration-200 text-sm"
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg 
+                    bg-neutral-800/20 hover:bg-neutral-700/30 
+                    border border-neutral-700/50
+                    transition-all duration-200 text-sm
+                    transform hover:-translate-y-0.5"
                   title={`Visit ${platform}`}
                 >
                   {platform === "github" && <FaGithub className="w-4 h-4" />}
