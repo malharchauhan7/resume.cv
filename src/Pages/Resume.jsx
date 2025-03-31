@@ -141,8 +141,8 @@ const Resume = () => {
       className="flex flex-col items-center min-h-screen py-16 bg-neutral-900 text-neutral-200"
     >
       <article className="w-[92%] max-w-3xl mx-auto">
-        <header className="text-center mb-20 mt-10">
-          <h1 className="text-5xl font-bold mb-4">{resumeData.name}</h1>
+        <header className="text-center mb-20 mt-5">
+          <h1 className="text-4xl font-bold mb-4">{resumeData.name}</h1>
           <p className="text-2xl text-neutral-400 mb-4">{resumeData.title}</p>
           <div className="flex justify-center items-center gap-4 text-sm text-neutral-500 mb-6">
             <a
