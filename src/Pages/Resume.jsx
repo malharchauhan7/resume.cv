@@ -157,14 +157,14 @@ const Resume = () => {
     },
   };
 
-  const handleDownload = () => {
-    const link = document.createElement("a");
-    link.href = "/RESUME_MALHAR.pdf";
-    link.download = "Malhar_Chauhan_Resume.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  // const handleDownload = () => {
+  //   const link = document.createElement("a");
+  //   link.href = "/RESUME_MALHAR.pdf";
+  //   link.download = "Malhar_Chauhan_Resume.pdf";
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // };
 
   const Section = ({ title, children }) => (
     <motion.section
@@ -354,17 +354,17 @@ const Resume = () => {
 
                 {/* Download Button */}
                 <div className="flex justify-center">
-                  <motion.button
-                    onClick={handleDownload}
+                  <motion.a
+                    href="https://drive.google.com/uc?export=download&id=1RpSPpVHac-5KFeU7raClmtLDgAU672wY"
                     className="flex items-center gap-2 px-4 py-2 text-sm
-                      rounded-md bg-neutral-200/90 text-neutral-900 
-                      hover:bg-neutral-200 transition-all duration-200"
+      rounded-md bg-neutral-200/90 text-neutral-900 
+      hover:bg-neutral-200 transition-all duration-200"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
                     <FaDownload className="w-3.5 h-3.5" />
                     <span className="font-medium">Download CV</span>
-                  </motion.button>
+                  </motion.a>
                 </div>
               </div>
             </Section>
