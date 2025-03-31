@@ -195,7 +195,7 @@ const Resume = () => {
           }}
           className="flex flex-col items-center min-h-screen py-16 bg-neutral-900 text-neutral-200"
         >
-          <article className="w-[92%] max-w-3xl mx-auto">
+          <article className="w-[85%] max-w-2xl mx-auto">
             <header className="text-center mb-20 mt-5">
               <h1 className="text-4xl font-bold mb-4">{resumeData.name}</h1>
               <p className="text-2xl text-neutral-400 mb-4">
@@ -248,9 +248,8 @@ const Resume = () => {
               {resumeData.projects.featured.map((project, index) => (
                 <div
                   key={index}
-                  className="mb-12 last:mb-0 p-6 rounded-lg
-                    bg-neutral-800/10 hover:bg-neutral-800/20
-                    border border-neutral-800/50
+                  className="mb-12 last:mb-0 py-6
+                    border-b border-neutral-800/50
                     transition-all duration-200"
                 >
                   <div className="flex justify-between items-start mb-4">
@@ -285,7 +284,7 @@ const Resume = () => {
                   <p className="text-neutral-300 mb-4 leading-relaxed">
                     {project.description}
                   </p>
-                  <div className="flex flex-wrap gap-2 mb-4">
+                  <div className="flex flex-wrap gap-2">
                     {project.technologies.map((tech, i) => (
                       <span
                         key={i}
