@@ -1,0 +1,611 @@
+import React from "react";
+import { motion } from "framer-motion";
+import {
+  FaGithub,
+  FaExternalLinkAlt,
+  FaLinkedin,
+  FaTwitter,
+  FaGlobe,
+  FaDownload,
+} from "react-icons/fa";
+
+const Resume = () => {
+  const resumeData = {
+    name: "Malhar Chauhan",
+    title: "Full Stack Developer",
+    location: "Ahmedabad India",
+    email: "malharchauhan02@gmail.com",
+    about:
+      "Final-year Computer Engineering student with a strong foundation in software development and web technologies.",
+    workExperience: [
+      {
+        title: "Python Developer Intern",
+        company: "Grownited Private Limited",
+        duration: "Jan 2025 - Present",
+        description:
+          "Developing web applications using React, FastAPI and MongoDB.",
+        achievements: ["Build Full Stack ExpenseMate", "Design FastAPIs and"],
+      },
+      {
+        title: "Summer Intern",
+        company: "Tatvasoft",
+        duration: "June 2024 - July 2024",
+        description:
+          "Completed a summer internship with consistency, hard work, and accountability in all tasks.",
+        achievements: [
+          "Accomplished the Virtual Community Support Project successfully.",
+          "Developed various APIs for different entities to perform CRUD operations on a database.",
+        ],
+      },
+    ],
+    projects: {
+      featured: [
+        {
+          title: "ExpenseMate",
+          description:
+            "A full-stack expense tracking application built with React and FastAPI",
+          github: "https://github.com/malharchauhan7/Expense_Tracker",
+          demo: "https://expensemate.demo.com",
+          image: "https://i.ibb.co/nsxNMdtH/expensemate.png",
+          technologies: ["React", "FastAPI", "MongoDB", "TailwindCSS"],
+          highlights: [
+            "Implemented user authentication with JWT",
+            "Built RESTful APIs for expense management",
+            "Designed responsive UI with Tailwind CSS",
+          ],
+        },
+        {
+          title: "Community Support Platform",
+          description:
+            "A platform for managing community support requests and resources",
+          github: "https://github.com/yourusername/community-support",
+          demo: "https://communitysupport.demo.com",
+          technologies: ["Node.js", "Express", "PostgreSQL", "React"],
+          highlights: [
+            "Developed CRUD operations for support tickets",
+            "Integrated real-time notifications",
+            "Implemented role-based access control",
+          ],
+        },
+      ],
+    },
+    skills: {
+      technical: [
+        "Python",
+        "JavaScript",
+        "React",
+        "Node.js",
+        "ExpressJS",
+        "MongoDB",
+        "FastAPI",
+        "SQL",
+        "Tailwind CSS",
+        "HTML & CSS",
+        "Git & GitHub",
+        "Vercel",
+        "PostgreSQL",
+      ],
+      soft: ["Communication", "Problem Solving"],
+    },
+    social: {
+      github: "https://github.com/malharchauhan7",
+      linkedin: "https://linkedin.com/in/malharchauhan",
+      twitter: "https://twitter.com/malharchauhan",
+      website: "https://malharchauhan.com",
+    },
+  };
+
+  const handleDownload = () => {
+    // You can add analytics tracking here
+    const link = document.createElement("a");
+    link.href = "/path-to-your-resume.pdf";
+    link.download = "Malhar_Chauhan_Resume.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const Section = ({ title, children }) => (
+    <motion.section
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="mb-12"
+    >
+      <h2 className="text-xl font-medium mb-6 pb-2 border-b border-neutral-700">
+        {title}
+      </h2>
+      {children}
+    </motion.section>
+  );
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="flex flex-col items-center min-h-screen px-4 py-10 bg-neutral-900 text-neutral-200"
+    >
+      <article className="w-[90%] lg:w-[35%] md:w-[50%] sm:w-[70%] mx-auto">
+        <header className="text-center mb-12">
+          <h1 className="text-3xl font-medium mb-2">{resumeData.name}</h1>
+          <p className="text-neutral-400">{resumeData.title}</p>
+          <div className="flex justify-center items-center gap-4 mt-3 text-sm text-neutral-500">
+            <span>{resumeData.email}</span>
+            <span>•</span>
+            <span>{resumeData.location}</span>
+          </div>
+          <p className="mt-4 text-neutral-400">{resumeData.about}</p>
+          <motion.button
+            onClick={handleDownload}
+            className="inline-flex items-center gap-2 px-4 py-2 mt-6 rounded-lg bg-neutral-800 hover:bg-neutral-700 transition-colors duration-200"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <FaDownload className="w-4 h-4" />
+            <span>Download Resume</span>
+          </motion.button>
+        </header>
+
+        <Section title="Experience">
+          {resumeData.workExperience.map((exp, index) => (
+            <div key={index} className="mb-8">
+              <div className="flex justify-between items-start mb-2">
+                <div>
+                  <h3 className="text-lg font-medium text-neutral-200">
+                    {exp.title}
+                  </h3>
+                  <p className="text-neutral-400">{exp.company}</p>
+                </div>
+                <span className="text-sm text-neutral-500">{exp.duration}</span>
+              </div>
+              <p className="text-neutral-300 mb-3">{exp.description}</p>
+              <ul className="list-disc pl-6 space-y-1">
+                {exp.achievements.map((achievement, i) => (
+                  <li key={i} className="text-neutral-400 text-sm">
+                    {achievement}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </Section>
+        <Section title="Projects">
+          {resumeData.projects.featured.map((project, index) => (
+            <div key={index} className="mb-8">
+              <div className="flex justify-between items-start mb-2">
+                <div>
+                  <h3 className="text-lg font-medium text-neutral-200 flex items-center gap-2">
+                    {project.title}
+                    <div className="flex items-center gap-3">
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-neutral-400 transition-colors duration-200 flex items-center gap-1"
+                        title="View Source Code"
+                      >
+                        <FaGithub className="w-4 h-4" />
+                        <span className="text-xs">Code</span>
+                      </a>
+                      {project.demo && (
+                        <a
+                          href={project.demo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:text-neutral-400 transition-colors duration-200 flex items-center gap-1"
+                          title="View Live Demo"
+                        >
+                          <FaExternalLinkAlt className="w-3 h-3" />
+                          <span className="text-xs">Demo</span>
+                        </a>
+                      )}
+                    </div>
+                  </h3>
+                </div>
+              </div>
+              {project.image && (
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-48 object-cover rounded-lg mb-3"
+                />
+              )}
+              <p className="text-neutral-300 mb-3">{project.description}</p>
+              <div className="flex flex-wrap gap-2 mb-3">
+                {project.technologies.map((tech, i) => (
+                  <span
+                    key={i}
+                    className="bg-neutral-800 text-neutral-300 px-3 py-1 rounded-full text-xs border border-neutral-700"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+              <ul className="list-disc pl-6 space-y-1">
+                {project.highlights.map((highlight, i) => (
+                  <li key={i} className="text-neutral-400 text-sm">
+                    {highlight}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </Section>
+        <Section title="Skills">
+          <div className="space-y-4">
+            <div>
+              <h3 className="text-neutral-300 mb-2">Technical Skills</h3>
+              <div className="flex flex-wrap gap-2">
+                {resumeData.skills.technical.map((skill, index) => (
+                  <span
+                    key={index}
+                    className="bg-neutral-800 text-neutral-300 px-3 py-1 rounded-full text-xs border border-neutral-700"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h3 className="text-neutral-300 mb-2">Soft Skills</h3>
+              <div className="flex flex-wrap gap-2">
+                {resumeData.skills.soft.map((skill, index) => (
+                  <span
+                    key={index}
+                    className="bg-neutral-800 text-neutral-300 px-3 py-1 rounded-full text-xs border border-neutral-700"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </Section>
+        <Section title="Contact">
+          <div className="flex flex-wrap gap-4 justify-center">
+            <a
+              href={resumeData.social.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-neutral-800 hover:bg-neutral-700 transition-colors duration-200"
+            >
+              <FaGithub className="w-5 h-5" />
+              <span>GitHub</span>
+            </a>
+            <a
+              href={resumeData.social.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-neutral-800 hover:bg-neutral-700 transition-colors duration-200"
+            >
+              <FaLinkedin className="w-5 h-5" />
+              <span>LinkedIn</span>
+            </a>
+            <a
+              href={resumeData.social.twitter}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-neutral-800 hover:bg-neutral-700 transition-colors duration-200"
+            >
+              <FaTwitter className="w-5 h-5" />
+              <span>Twitter</span>
+            </a>
+            <a
+              href={resumeData.social.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-neutral-800 hover:bg-neutral-700 transition-colors duration-200"
+            >
+              <FaGlobe className="w-5 h-5" />
+              <span>Website</span>
+            </a>
+          </div>
+        </Section>
+      </article>
+    </motion.div>
+  );
+};
+
+export default Resume;
+import React from "react";
+import { motion } from "framer-motion";
+import {
+  FaGithub,
+  FaExternalLinkAlt,
+  FaLinkedin,
+  FaTwitter,
+  FaGlobe,
+  FaDownload,
+} from "react-icons/fa";
+import { TbExternalLink } from "react-icons/tb";
+
+const Resume = () => {
+  const resumeData = {
+    name: "Malhar Chauhan",
+    title: "Full Stack Developer",
+    location: "Ahmedabad India",
+    email: "malharchauhan02@gmail.com",
+    about:
+      "Final-year Computer Engineering student with a strong foundation in software development and web technologies.",
+    workExperience: [
+      {
+        title: "Python Developer Intern",
+        company: "Grownited Private Limited",
+        duration: "Jan 2025 - Present",
+        description:
+          "Developing and optimizing web applications using React, FastAPI, and MongoDB.",
+        achievements: [
+          "Built a full-stack expense management application (ExpenseMate)",
+          "Designed and implemented efficient FastAPI endpoints",
+        ],
+      },
+      {
+        title: "Summer Intern",
+        company: "Tatvasoft",
+        duration: "June 2024 - July 2024",
+        description:
+          "Completed a summer internship with consistency, hard work, and accountability in all tasks.",
+        achievements: [
+          "Accomplished the Virtual Community Support Project successfully.",
+          "Developed various APIs for different entities to perform CRUD operations on a database.",
+        ],
+      },
+    ],
+    projects: {
+      featured: [
+        {
+          title: "ExpenseMate",
+          description:
+            "A full-stack expense tracking application built with React and FastAPI",
+          github: "https://github.com/malharchauhan7/Expense_Tracker",
+          // demo: "https://expensemate.demo.com",
+          image: "https://i.ibb.co/nsxNMdtH/expensemate.png",
+          technologies: ["React", "FastAPI", "MongoDB", "TailwindCSS"],
+          highlights: [
+            "Implemented user authentication with JWT",
+            "Built RESTful APIs for expense management",
+            "Designed responsive UI with Tailwind CSS",
+          ],
+        },
+        {
+          title: "Ziply - URL Shortner",
+          description:
+            "A modern URL shortening service built with the MERN stack",
+          github: "https://github.com/malharchauhan7/Ziply",
+          // demo: "https://github.com/malharchauhan7/Ziply",
+          technologies: ["Node.js", "Express", "MongoDB", "React"],
+          highlights: [
+            "Developed Click Analytics Feature",
+            "Copy to clipboard Feature",
+            "Responsive Design",
+          ],
+        },
+        {
+          title: "Personal Website",
+          description:
+            "I redesign my personal website and added blogs and more projects",
+
+          demo: "https://malhar.vercel.app/",
+          image: "https://i.ibb.co/nsxNMdtH/expensemate.png",
+          technologies: ["React", "Framer-motion", "Vercel", "TailwindCSS"],
+          highlights: ["Designed responsive UI with Tailwind CSS"],
+        },
+      ],
+    },
+    skills: {
+      technical: [
+        "Python",
+        "JavaScript",
+        "React",
+        "Node.js",
+        "ExpressJS",
+        "MongoDB",
+        "FastAPI",
+        "SQL",
+        "Tailwind CSS",
+        "HTML & CSS",
+        "Git & GitHub",
+        "Vercel",
+        "PostgreSQL",
+      ],
+      soft: ["Communication", "Problem Solving"],
+    },
+    social: {
+      github: "https://github.com/malharchauhan7",
+      linkedin:
+        "https://www.linkedin.com/in/malhar-chauhan-539100238?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app&original_referer=https%3A%2F%2Fmalharportfolio.vercel.app%2F",
+      twitter: "https://x.com/Malhar_7?t=AOSeo52_MVYwdtSzNqfl2A&s=09",
+      Portfolio: "https://malhar.vercel.app/",
+    },
+  };
+
+  const handleDownload = () => {
+    const link = document.createElement("a");
+    link.href = "/RESUME_MALHAR.pdf";
+    link.download = "Malhar_Chauhan_Resume.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const Section = ({ title, children }) => (
+    <motion.section
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="mb-16"
+    >
+      <h2 className="text-2xl font-medium mb-8 pb-2 border-b border-neutral-800">
+        {title}
+      </h2>
+      {children}
+    </motion.section>
+  );
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="flex flex-col items-center min-h-screen py-16 bg-neutral-900 text-neutral-200"
+    >
+      <article className="w-[92%] max-w-3xl mx-auto">
+        <header className="text-center mb-16">
+          <h1 className="text-4xl font-medium mb-3">{resumeData.name}</h1>
+          <p className="text-xl text-neutral-400 mb-3">{resumeData.title}</p>
+          <div className="flex justify-center items-center gap-4 text-sm text-neutral-500">
+            <span>{resumeData.email}</span>
+            <span>•</span>
+            <span>{resumeData.location}</span>
+          </div>
+          <p className="mt-5 text-neutral-400 max-w-2xl mx-auto leading-relaxed">
+            {resumeData.about}
+          </p>
+        </header>
+
+        <Section title="Experience">
+          {resumeData.workExperience.map((exp, index) => (
+            <div key={index} className="mb-10 last:mb-0">
+              <div className="flex justify-between items-start mb-2">
+                <div>
+                  <h3 className="text-xl font-medium text-neutral-200">
+                    {exp.title}
+                  </h3>
+                  <p className="text-neutral-400">{exp.company}</p>
+                </div>
+                <span className="text-sm text-neutral-500 bg-neutral-800/50 px-3 py-1 rounded-full">
+                  {exp.duration}
+                </span>
+              </div>
+              <p className="text-neutral-300 mt-2 mb-3 leading-relaxed">
+                {exp.description}
+              </p>
+              <ul className="list-disc pl-6 space-y-2">
+                {exp.achievements.map((achievement, i) => (
+                  <li key={i} className="text-neutral-400">
+                    {achievement}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </Section>
+
+        <Section title="Projects">
+          {resumeData.projects.featured.map((project, index) => (
+            <div key={index} className="mb-12 last:mb-0">
+              <div className="flex justify-between items-start mb-4">
+                <h3 className="text-xl font-medium text-neutral-200">
+                  {project.title}
+                </h3>
+                <div className="flex items-center gap-3">
+                  {project.github && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-neutral-400 hover:text-neutral-200 transition-colors duration-200"
+                      title="View Source Code"
+                    >
+                      <FaGithub className="w-5 h-5" />
+                    </a>
+                  )}
+                  {project.demo && (
+                    <a
+                      href={project.demo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-neutral-400 hover:text-neutral-200 transition-colors duration-200"
+                      title="View Live Demo"
+                    >
+                      <TbExternalLink className="w-4 h-4" />
+                    </a>
+                  )}
+                </div>
+              </div>
+              <p className="text-neutral-300 mb-4 leading-relaxed">
+                {project.description}
+              </p>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {project.technologies.map((tech, i) => (
+                  <span
+                    key={i}
+                    className="bg-neutral-800/50 text-neutral-300 px-3 py-1 rounded-full text-xs"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </Section>
+
+        <Section title="Skills">
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-lg text-neutral-300 mb-4">
+                Technical Skills
+              </h3>
+              <div className="flex flex-wrap gap-3">
+                {resumeData.skills.technical.map((skill, index) => (
+                  <span
+                    key={index}
+                    className="bg-neutral-800/50 text-neutral-300 px-4 py-2 rounded-full text-sm"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </Section>
+
+        <Section title="Contact">
+          <div className="space-y-8">
+            {/* Social Links */}
+            <div className="flex flex-wrap gap-3 justify-center">
+              {Object.entries(resumeData.social).map(([platform, url]) => (
+                <a
+                  key={platform}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-md 
+                    bg-neutral-800/30 hover:bg-neutral-800/50 
+                    transition-colors duration-200 text-sm"
+                  title={`Visit ${platform}`}
+                >
+                  {platform === "github" && <FaGithub className="w-4 h-4" />}
+                  {platform === "linkedin" && (
+                    <FaLinkedin className="w-4 h-4" />
+                  )}
+                  {platform === "twitter" && <FaTwitter className="w-4 h-4" />}
+                  {platform === "website" && <FaGlobe className="w-4 h-4" />}
+                  <span className="capitalize">{platform}</span>
+                </a>
+              ))}
+            </div>
+
+            {/* Download Button */}
+            <div className="flex justify-center">
+              <motion.button
+                onClick={handleDownload}
+                className="flex items-center gap-2 px-4 py-2 text-sm
+                  rounded-md bg-neutral-200/90 text-neutral-900 
+                  hover:bg-neutral-200 transition-all duration-200"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <FaDownload className="w-3.5 h-3.5" />
+                <span className="font-medium">Download CV</span>
+              </motion.button>
+            </div>
+          </div>
+        </Section>
+      </article>
+    </motion.div>
+  );
+};
+
+export default Resume;
