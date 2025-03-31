@@ -157,15 +157,6 @@ const Resume = () => {
     },
   };
 
-  // const handleDownload = () => {
-  //   const link = document.createElement("a");
-  //   link.href = "/RESUME_MALHAR.pdf";
-  //   link.download = "Malhar_Chauhan_Resume.pdf";
-  //   document.body.appendChild(link);
-  //   link.click();
-  //   document.body.removeChild(link);
-  // };
-
   const Section = ({ title, children }) => (
     <motion.section
       initial={{ opacity: 0, y: 20 }}
@@ -193,35 +184,37 @@ const Resume = () => {
             filter: "blur(0px)",
             transition: { duration: 0.5 },
           }}
-          className="flex flex-col items-center min-h-screen py-16 bg-neutral-900 text-neutral-200"
+          className="flex flex-col items-center min-h-screen p-4 sm:p-6 md:py-16 bg-neutral-900 text-neutral-200"
         >
-          <article className="w-[85%] max-w-2xl mx-auto">
-            <header className="text-center mb-20 mt-5">
-              <h1 className="text-4xl font-bold mb-4">{resumeData.name}</h1>
-              <p className="text-2xl text-neutral-400 mb-4">
+          <article className="w-full max-w-[95%] md:max-w-2xl mx-auto">
+            <header className="text-center mb-12 md:mb-20 mt-4 md:mt-5">
+              <h1 className="text-3xl md:text-4xl font-bold mb-3 md:mb-4">
+                {resumeData.name}
+              </h1>
+              <p className="text-xl md:text-2xl text-neutral-400 mb-3 md:mb-4">
                 {resumeData.title}
               </p>
-              <div className="flex justify-center items-center gap-4 text-sm text-neutral-500 mb-6">
+              <div className="flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4 text-sm text-neutral-500 mb-4 md:mb-6">
                 <a
                   href={`mailto:${resumeData.email}`}
                   className="hover:text-neutral-300 transition-colors"
                 >
                   {resumeData.email}
                 </a>
-                <span>•</span>
+                <span className="hidden sm:block">•</span>
                 <span>{resumeData.location}</span>
               </div>
-              <p className="text-neutral-400 max-w-2xl mx-auto leading-relaxed text-lg">
+              <p className="text-neutral-400 max-w-2xl mx-auto leading-relaxed text-base md:text-lg px-2">
                 {resumeData.about}
               </p>
             </header>
 
             <Section title="Experience">
               {resumeData.workExperience.map((exp, index) => (
-                <div key={index} className="mb-10 last:mb-0">
-                  <div className="flex justify-between items-start mb-2">
+                <div key={index} className="mb-8 md:mb-10 last:mb-0">
+                  <div className="flex flex-col sm:flex-row justify-between items-start gap-2 sm:gap-0 mb-2">
                     <div>
-                      <h3 className="text-xl font-medium text-neutral-200">
+                      <h3 className="text-lg md:text-xl font-medium text-neutral-200">
                         {exp.title}
                       </h3>
                       <p className="text-neutral-400">{exp.company}</p>
@@ -248,12 +241,12 @@ const Resume = () => {
               {resumeData.projects.featured.map((project, index) => (
                 <div
                   key={index}
-                  className="mb-12 last:mb-0 py-6
+                  className="mb-8 md:mb-12 last:mb-0 py-4 md:py-6
                     border-b border-neutral-800/50
                     transition-all duration-200"
                 >
-                  <div className="flex justify-between items-start mb-4">
-                    <h3 className="text-xl font-medium text-neutral-200">
+                  <div className="flex flex-col sm:flex-row justify-between items-start gap-3 mb-4">
+                    <h3 className="text-lg md:text-xl font-medium text-neutral-200">
                       {project.title}
                     </h3>
                     <div className="flex items-center gap-3">
@@ -288,7 +281,7 @@ const Resume = () => {
                     {project.technologies.map((tech, i) => (
                       <span
                         key={i}
-                        className="bg-neutral-800/50 text-neutral-300 px-3 py-1 rounded-full text-xs"
+                        className="bg-neutral-800/50 text-neutral-300 px-3 py-1 rounded-full text-xs md:text-sm"
                       >
                         {tech}
                       </span>
@@ -299,16 +292,16 @@ const Resume = () => {
             </Section>
 
             <Section title="Skills">
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 <div>
-                  <h3 className="text-lg text-neutral-300 mb-4">
+                  <h3 className="text-base md:text-lg text-neutral-300 mb-3 md:mb-4">
                     Technical Skills
                   </h3>
-                  <div className="flex flex-wrap gap-3">
+                  <div className="flex flex-wrap gap-2 md:gap-3">
                     {resumeData.skills.technical.map((skill, index) => (
                       <span
                         key={index}
-                        className="bg-neutral-800/50 text-neutral-300 px-4 py-2 rounded-full text-sm"
+                        className="bg-neutral-800/50 text-neutral-300 px-3 py-1 md:px-4 md:py-2 rounded-full text-xs md:text-sm"
                       >
                         {skill}
                       </span>
@@ -319,19 +312,18 @@ const Resume = () => {
             </Section>
 
             <Section title="Contact">
-              <div className="space-y-8">
-                {/* Social Links */}
-                <div className="flex flex-wrap gap-4 justify-center">
+              <div className="space-y-6 md:space-y-8">
+                <div className="flex flex-wrap gap-3 md:gap-4 justify-center">
                   {Object.entries(resumeData.social).map(([platform, url]) => (
                     <a
                       key={platform}
                       href={url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-4 py-2 rounded-lg 
+                      className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-lg 
                         bg-neutral-800/20 hover:bg-neutral-700/30 
                         border border-neutral-700/50
-                        transition-all duration-200 text-sm
+                        transition-all duration-200 text-xs md:text-sm
                         transform hover:-translate-y-0.5"
                       title={`Visit ${platform}`}
                     >
@@ -352,17 +344,16 @@ const Resume = () => {
                   ))}
                 </div>
 
-                {/* Download Button */}
                 <div className="flex justify-center">
                   <motion.a
                     href="https://drive.google.com/uc?export=download&id=1RpSPpVHac-5KFeU7raClmtLDgAU672wY"
-                    className="flex items-center gap-2 px-4 py-2 text-sm
-      rounded-md bg-neutral-200/90 text-neutral-900 
-      hover:bg-neutral-200 transition-all duration-200"
+                    className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm
+                      rounded-md bg-neutral-200/90 text-neutral-900 
+                      hover:bg-neutral-200 transition-all duration-200"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    <FaDownload className="w-3.5 h-3.5" />
+                    <FaDownload className="w-3 h-3 md:w-3.5 md:h-3.5" />
                     <span className="font-medium">Download CV</span>
                   </motion.a>
                 </div>
