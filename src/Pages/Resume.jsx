@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   FaGithub,
@@ -9,8 +9,55 @@ import {
   FaDownload,
 } from "react-icons/fa";
 import { TbExternalLink } from "react-icons/tb";
+import Loading from "../components/Loading";
+import { AnimatePresence } from "framer-motion";
+
+const pageVariants = {
+  initial: {
+    opacity: 0,
+    y: 20,
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      when: "beforeChildren",
+      staggerChildren: 0.1,
+    },
+  },
+  exit: {
+    opacity: 0,
+    y: -20,
+    transition: {
+      duration: 0.3,
+    },
+  },
+};
 
 const Resume = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Add a minimum loading time for smooth transition
+    const minimumLoadingTime = 800;
+    const startTime = Date.now();
+
+    if (document.readyState === "complete") {
+      const elapsedTime = Date.now() - startTime;
+      const remainingTime = Math.max(0, minimumLoadingTime - elapsedTime);
+
+      setTimeout(() => setIsLoading(false), remainingTime);
+    } else {
+      window.addEventListener("load", () => {
+        const elapsedTime = Date.now() - startTime;
+        const remainingTime = Math.max(0, minimumLoadingTime - elapsedTime);
+
+        setTimeout(() => setIsLoading(false), remainingTime);
+      });
+    }
+  }, []);
+
   const resumeData = {
     name: "Malhar Chauhan",
     title: "Full Stack Developer",
@@ -134,180 +181,198 @@ const Resume = () => {
   );
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="flex flex-col items-center min-h-screen py-16 bg-neutral-900 text-neutral-200"
-    >
-      <article className="w-[92%] max-w-3xl mx-auto">
-        <header className="text-center mb-20 mt-5">
-          <h1 className="text-4xl font-bold mb-4">{resumeData.name}</h1>
-          <p className="text-2xl text-neutral-400 mb-4">{resumeData.title}</p>
-          <div className="flex justify-center items-center gap-4 text-sm text-neutral-500 mb-6">
-            <a
-              href={`mailto:${resumeData.email}`}
-              className="hover:text-neutral-300 transition-colors"
-            >
-              {resumeData.email}
-            </a>
-            <span>•</span>
-            <span>{resumeData.location}</span>
-          </div>
-          <p className="text-neutral-400 max-w-2xl mx-auto leading-relaxed text-lg">
-            {resumeData.about}
-          </p>
-        </header>
-
-        <Section title="Experience">
-          {resumeData.workExperience.map((exp, index) => (
-            <div key={index} className="mb-10 last:mb-0">
-              <div className="flex justify-between items-start mb-2">
-                <div>
-                  <h3 className="text-xl font-medium text-neutral-200">
-                    {exp.title}
-                  </h3>
-                  <p className="text-neutral-400">{exp.company}</p>
-                </div>
-                <span className="text-sm text-neutral-500 bg-neutral-800/50 px-3 py-1 rounded-full">
-                  {exp.duration}
-                </span>
-              </div>
-              <p className="text-neutral-300 mt-2 mb-3 leading-relaxed">
-                {exp.description}
+    <AnimatePresence mode="wait">
+      {isLoading ? (
+        <Loading key="loading" />
+      ) : (
+        <motion.div
+          key="content"
+          initial={{ opacity: 0, filter: "blur(10px)" }}
+          animate={{
+            opacity: 1,
+            filter: "blur(0px)",
+            transition: { duration: 0.5 },
+          }}
+          className="flex flex-col items-center min-h-screen py-16 bg-neutral-900 text-neutral-200"
+        >
+          <article className="w-[92%] max-w-3xl mx-auto">
+            <header className="text-center mb-20 mt-5">
+              <h1 className="text-4xl font-bold mb-4">{resumeData.name}</h1>
+              <p className="text-2xl text-neutral-400 mb-4">
+                {resumeData.title}
               </p>
-              <ul className="list-disc pl-6 space-y-2">
-                {exp.achievements.map((achievement, i) => (
-                  <li key={i} className="text-neutral-400">
-                    {achievement}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </Section>
-
-        <Section title="Projects">
-          {resumeData.projects.featured.map((project, index) => (
-            <div
-              key={index}
-              className="mb-12 last:mb-0 p-6 rounded-lg
-                bg-neutral-800/10 hover:bg-neutral-800/20
-                border border-neutral-800/50
-                transition-all duration-200"
-            >
-              <div className="flex justify-between items-start mb-4">
-                <h3 className="text-xl font-medium text-neutral-200">
-                  {project.title}
-                </h3>
-                <div className="flex items-center gap-3">
-                  {project.github && (
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-neutral-400 hover:text-neutral-200 transition-colors duration-200"
-                      title="View Source Code"
-                    >
-                      <FaGithub className="w-5 h-5" />
-                    </a>
-                  )}
-                  {project.demo && (
-                    <a
-                      href={project.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-neutral-400 hover:text-neutral-200 transition-colors duration-200"
-                      title="View Live Demo"
-                    >
-                      <TbExternalLink className="w-4 h-4" />
-                    </a>
-                  )}
-                </div>
-              </div>
-              <p className="text-neutral-300 mb-4 leading-relaxed">
-                {project.description}
-              </p>
-              <div className="flex flex-wrap gap-2 mb-4">
-                {project.technologies.map((tech, i) => (
-                  <span
-                    key={i}
-                    className="bg-neutral-800/50 text-neutral-300 px-3 py-1 rounded-full text-xs"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
-        </Section>
-
-        <Section title="Skills">
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-lg text-neutral-300 mb-4">
-                Technical Skills
-              </h3>
-              <div className="flex flex-wrap gap-3">
-                {resumeData.skills.technical.map((skill, index) => (
-                  <span
-                    key={index}
-                    className="bg-neutral-800/50 text-neutral-300 px-4 py-2 rounded-full text-sm"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </Section>
-
-        <Section title="Contact">
-          <div className="space-y-8">
-            {/* Social Links */}
-            <div className="flex flex-wrap gap-4 justify-center">
-              {Object.entries(resumeData.social).map(([platform, url]) => (
+              <div className="flex justify-center items-center gap-4 text-sm text-neutral-500 mb-6">
                 <a
-                  key={platform}
-                  href={url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg 
-                    bg-neutral-800/20 hover:bg-neutral-700/30 
-                    border border-neutral-700/50
-                    transition-all duration-200 text-sm
-                    transform hover:-translate-y-0.5"
-                  title={`Visit ${platform}`}
+                  href={`mailto:${resumeData.email}`}
+                  className="hover:text-neutral-300 transition-colors"
                 >
-                  {platform === "github" && <FaGithub className="w-4 h-4" />}
-                  {platform === "linkedin" && (
-                    <FaLinkedin className="w-4 h-4" />
-                  )}
-                  {platform === "twitter" && <FaTwitter className="w-4 h-4" />}
-                  {platform === "website" && <FaGlobe className="w-4 h-4" />}
-                  <span className="capitalize">{platform}</span>
+                  {resumeData.email}
                 </a>
-              ))}
-            </div>
+                <span>•</span>
+                <span>{resumeData.location}</span>
+              </div>
+              <p className="text-neutral-400 max-w-2xl mx-auto leading-relaxed text-lg">
+                {resumeData.about}
+              </p>
+            </header>
 
-            {/* Download Button */}
-            <div className="flex justify-center">
-              <motion.button
-                onClick={handleDownload}
-                className="flex items-center gap-2 px-4 py-2 text-sm
-                  rounded-md bg-neutral-200/90 text-neutral-900 
-                  hover:bg-neutral-200 transition-all duration-200"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <FaDownload className="w-3.5 h-3.5" />
-                <span className="font-medium">Download CV</span>
-              </motion.button>
-            </div>
-          </div>
-        </Section>
-      </article>
-    </motion.div>
+            <Section title="Experience">
+              {resumeData.workExperience.map((exp, index) => (
+                <div key={index} className="mb-10 last:mb-0">
+                  <div className="flex justify-between items-start mb-2">
+                    <div>
+                      <h3 className="text-xl font-medium text-neutral-200">
+                        {exp.title}
+                      </h3>
+                      <p className="text-neutral-400">{exp.company}</p>
+                    </div>
+                    <span className="text-sm text-neutral-500 bg-neutral-800/50 px-3 py-1 rounded-full">
+                      {exp.duration}
+                    </span>
+                  </div>
+                  <p className="text-neutral-300 mt-2 mb-3 leading-relaxed">
+                    {exp.description}
+                  </p>
+                  <ul className="list-disc pl-6 space-y-2">
+                    {exp.achievements.map((achievement, i) => (
+                      <li key={i} className="text-neutral-400">
+                        {achievement}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </Section>
+
+            <Section title="Projects">
+              {resumeData.projects.featured.map((project, index) => (
+                <div
+                  key={index}
+                  className="mb-12 last:mb-0 p-6 rounded-lg
+                    bg-neutral-800/10 hover:bg-neutral-800/20
+                    border border-neutral-800/50
+                    transition-all duration-200"
+                >
+                  <div className="flex justify-between items-start mb-4">
+                    <h3 className="text-xl font-medium text-neutral-200">
+                      {project.title}
+                    </h3>
+                    <div className="flex items-center gap-3">
+                      {project.github && (
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-neutral-400 hover:text-neutral-200 transition-colors duration-200"
+                          title="View Source Code"
+                        >
+                          <FaGithub className="w-5 h-5" />
+                        </a>
+                      )}
+                      {project.demo && (
+                        <a
+                          href={project.demo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-neutral-400 hover:text-neutral-200 transition-colors duration-200"
+                          title="View Live Demo"
+                        >
+                          <TbExternalLink className="w-4 h-4" />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                  <p className="text-neutral-300 mb-4 leading-relaxed">
+                    {project.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {project.technologies.map((tech, i) => (
+                      <span
+                        key={i}
+                        className="bg-neutral-800/50 text-neutral-300 px-3 py-1 rounded-full text-xs"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </Section>
+
+            <Section title="Skills">
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-lg text-neutral-300 mb-4">
+                    Technical Skills
+                  </h3>
+                  <div className="flex flex-wrap gap-3">
+                    {resumeData.skills.technical.map((skill, index) => (
+                      <span
+                        key={index}
+                        className="bg-neutral-800/50 text-neutral-300 px-4 py-2 rounded-full text-sm"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </Section>
+
+            <Section title="Contact">
+              <div className="space-y-8">
+                {/* Social Links */}
+                <div className="flex flex-wrap gap-4 justify-center">
+                  {Object.entries(resumeData.social).map(([platform, url]) => (
+                    <a
+                      key={platform}
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-4 py-2 rounded-lg 
+                        bg-neutral-800/20 hover:bg-neutral-700/30 
+                        border border-neutral-700/50
+                        transition-all duration-200 text-sm
+                        transform hover:-translate-y-0.5"
+                      title={`Visit ${platform}`}
+                    >
+                      {platform === "github" && (
+                        <FaGithub className="w-4 h-4" />
+                      )}
+                      {platform === "linkedin" && (
+                        <FaLinkedin className="w-4 h-4" />
+                      )}
+                      {platform === "twitter" && (
+                        <FaTwitter className="w-4 h-4" />
+                      )}
+                      {platform === "website" && (
+                        <FaGlobe className="w-4 h-4" />
+                      )}
+                      <span className="capitalize">{platform}</span>
+                    </a>
+                  ))}
+                </div>
+
+                {/* Download Button */}
+                <div className="flex justify-center">
+                  <motion.button
+                    onClick={handleDownload}
+                    className="flex items-center gap-2 px-4 py-2 text-sm
+                      rounded-md bg-neutral-200/90 text-neutral-900 
+                      hover:bg-neutral-200 transition-all duration-200"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <FaDownload className="w-3.5 h-3.5" />
+                    <span className="font-medium">Download CV</span>
+                  </motion.button>
+                </div>
+              </div>
+            </Section>
+          </article>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 
