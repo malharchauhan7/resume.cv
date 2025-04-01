@@ -346,7 +346,7 @@ const Resume = () => {
 
                 <div className="flex justify-center">
                   <motion.a
-                    href="https://drive.google.com/uc?export=download&id=1RpSPpVHac-5KFeU7raClmtLDgAU672wY"
+                    href="https://drive.google.com/uc?export=download&id=1g9vVpa0QTTOb4a7X_96FDsJT1lAgPcBk"
                     className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm
                       rounded-md bg-neutral-200/90 text-neutral-900 
                       hover:bg-neutral-200 transition-all duration-200"
